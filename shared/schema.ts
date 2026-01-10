@@ -1,18 +1,27 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+export const snacks = pgTable("snacks", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  category: text("category").notNull(), // e.g., 'Snack', 'Drink'
+  imageUrl: text("image_url").notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const machines = pgTable("machines", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  features: text("features").array(),
+  imageUrl: text("image_url").notNull(),
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const insertSnackSchema = createInsertSchema(snacks).omit({ id: true });
+export const insertMachineSchema = createInsertSchema(machines).omit({ id: true });
+
+export type Snack = typeof snacks.$inferSelect;
+export type InsertSnack = z.infer<typeof insertSnackSchema>;
+export type Machine = typeof machines.$inferSelect;
+export type InsertMachine = z.infer<typeof insertMachineSchema>;

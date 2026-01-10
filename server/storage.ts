@@ -1,38 +1,31 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import { snacks, machines, type Snack, type InsertSnack, type Machine, type InsertMachine } from "@shared/schema";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getSnacks(): Promise<Snack[]>;
+  createSnack(snack: InsertSnack): Promise<Snack>;
+  getMachines(): Promise<Machine[]>;
+  createMachine(machine: InsertMachine): Promise<Machine>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getSnacks(): Promise<Snack[]> {
+    return await db.select().from(snacks);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async createSnack(insertSnack: InsertSnack): Promise<Snack> {
+    const [snack] = await db.insert(snacks).values(insertSnack).returning();
+    return snack;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getMachines(): Promise<Machine[]> {
+    return await db.select().from(machines);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createMachine(insertMachine: InsertMachine): Promise<Machine> {
+    const [machine] = await db.insert(machines).values(insertMachine).returning();
+    return machine;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
