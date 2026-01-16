@@ -16,7 +16,6 @@ export function Navbar() {
   const navLinks = [
     { name: "Mission", to: "mission" },
     { name: "Our Snacks", to: "snacks" },
-    { name: "Our Machines", to: "machines" },
   ];
 
   return (
@@ -59,7 +58,7 @@ export function Navbar() {
             variant="nature"
             size="sm"
             onClick={() => {
-              window.location.href = "mailto:contact@cleanfuel.com";
+              window.location.href = "mailto:contact@cleanfuelvending.com";
             }}
           >
             Contact Us
@@ -100,7 +99,7 @@ export function Navbar() {
               className="w-full mt-4"
               variant="nature"
               onClick={() => {
-                window.location.href = "mailto:contact@cleanfuel.com";
+                window.location.href = "mailto:contact@cleanfuelvending.com";
                 setIsOpen(false);
               }}
             >

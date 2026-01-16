@@ -1,17 +1,16 @@
 import { motion } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
-import { ArrowRight, Leaf, Heart, Zap, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Leaf, Heart, Zap } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { useSnacks, useMachines } from "@/hooks/use-content";
+import { useSnacks } from "@/hooks/use-content";
 
 export default function Home() {
   const { data: snacks, isLoading: loadingSnacks } = useSnacks();
-  const { data: machines, isLoading: loadingMachines } = useMachines();
 
   const handleContact = () => {
-    window.location.href = "mailto:contact@cleanfuel.com";
+    window.location.href = "mailto:contact@cleanfuelvending.com";
   };
 
   return (
@@ -214,87 +213,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MACHINES SECTION */}
-      <section id="machines" className="py-24 bg-primary text-white relative">
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <SectionHeader
-            title="Smart Technology"
-            subtitle="Our state-of-the-art machines are designed for reliability and ease of use."
-            light
-          />
-
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {loadingMachines ? (
-              <div className="h-96 bg-white/10 animate-pulse rounded-3xl" />
-            ) : (
-              <div className="space-y-8">
-                {machines?.map((machine, idx) => (
-                  <motion.div
-                    key={machine.id}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.2 }}
-                    className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 hover:bg-white/15 transition-colors"
-                  >
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-1">
-                        <h3 className="font-display font-bold text-2xl mb-2 text-white">{machine.name}</h3>
-                        <p className="text-white/80 mb-6">{machine.description}</p>
-                        
-                        <div className="space-y-3">
-                          {machine.features && machine.features.map((feature, i) => (
-                            <div key={i} className="flex items-center gap-3 text-sm text-white/90">
-                              <CheckCircle2 size={16} className="text-accent" />
-                              {feature}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Machine Thumbnail */}
-                      <div className="w-full md:w-32 h-32 rounded-2xl overflow-hidden bg-white/5 shrink-0">
-                         {/* 
-                            Using Unsplash for Vending Machine visual 
-                            https://unsplash.com/photos/black-and-gray-vending-machine-73F4pKOv9yg
-                         */}
-                        <img 
-                          src={machine.imageUrl || "https://images.unsplash.com/photo-1596277053535-64cb4d271295?w=500&auto=format&fit=crop&q=60"}
-                          alt={machine.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative hidden md:block"
-            >
-              {/* Abstract Machine Visualization */}
-              <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white/20">
-                <img
-                  src="https://pixabay.com/get/g078bdbdb9ecb54b283942a61208f8234ba25136467e8624ebc43bd8706037f4cce5c50daeac1007bd62bffacc4a2cc70ed077781a850df152d0bc68dc0a340ef_1280.jpg"
-                  alt="Modern office space"
-                  className="w-full h-full object-cover"
-                />
-                 <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
-                 <div className="absolute bottom-10 left-10 right-10 p-8 bg-white/95 backdrop-blur rounded-2xl shadow-xl text-primary-foreground">
-                    <h4 className="text-primary font-bold text-xl mb-2">Perfect Fit</h4>
-                    <p className="text-muted-foreground text-sm">Compact designs that look great in any office, gym, or school lobby.</p>
-                 </div>
-              </div>
-              <div className="absolute top-10 -right-10 w-full h-full border-2 border-accent/30 rounded-[3rem] -z-10" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="bg-foreground text-white py-16">
         <div className="container mx-auto px-4 md:px-6">
@@ -309,10 +227,10 @@ export default function Home() {
             <div className="text-center md:text-right">
               <p className="text-lg font-medium mb-2">Ready to upgrade your snacking?</p>
               <a 
-                href="mailto:contact@cleanfuel.com" 
+                href="mailto:contact@cleanfuelvending.com" 
                 className="text-primary hover:text-accent transition-colors font-bold text-xl block hover:underline"
               >
-                contact@cleanfuel.com
+                contact@cleanfuelvending.com
               </a>
             </div>
           </div>
